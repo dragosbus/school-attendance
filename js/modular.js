@@ -1,7 +1,6 @@
 (function () {
 
   var model = {
-
     init() {
       if (!localStorage.attendance) {
         localStorage.attendance = JSON.stringify([]);
@@ -21,13 +20,11 @@
   };
 
   var controller = {
-
     random() {
       return (Math.random() >= 0.5);
     },
 
     addStudent(name) {
-
       model.add({
         name: name,
         attend: [],
@@ -45,7 +42,6 @@
           for (let j = 0; j <= 11; j++) {
             student.attend.push(this.random());
           }
-
         }
       }
       localStorage.attendance = JSON.stringify(data);
@@ -56,21 +52,18 @@
       if (!check) {
         data[student].missed++;
       }
-
       localStorage.attendance = JSON.stringify(data);
     },
-    //handler for decrease missedDays when the result checkbox clicked is true 
+    //handler for decrease missedDays when the result of checkbox clicked is true 
     decreaseMissed(student) {
       var data = model.getStorage();
       data[student - 1].missed--;
       localStorage.attendance = JSON.stringify(data);
     },
-
     //update attend array when checkboxes are clicked
     changeCheck(check, index, parent) {
       var data = model.getStorage();
       data[parent - 1].attend[index] = check;
-
       localStorage.attendance = JSON.stringify(data);
     },
 
@@ -86,14 +79,12 @@
 
   var view = {
     init() {
-
       this.students = document.querySelectorAll('tbody .name-col');
       //check if array from localStorage is empty for avoiding duplicates.Without this condition every time the page refresh will push all students to array
       if (controller.getData().length < 1) {
         this.students.forEach((student) => {
           controller.addStudent(student.textContent);
         });
-
       }
       this.changeCheck();
       this.render();
@@ -116,14 +107,11 @@
             controller.changeDays(i, student.attend[j]);
           }
         }
-
       }
-
       for (let i = 0; i < this.studentsDOM.length; i++) {
         var missed = this.studentsDOM[i].querySelector('.missed-col');
         missed.textContent = controller.getData()[i].missed;
       }
-
     },
 
     changeCheck() {
@@ -147,7 +135,6 @@
         });
       }
     }
-
   };
 
   controller.init();
